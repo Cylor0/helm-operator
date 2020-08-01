@@ -4,8 +4,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
-  repository: docker.io/fluxcd/helm-operator
-  tag: 1.2.0
+  repository: docker.io/raspbernetes/helm-operator
+  tag: latest
   pullPolicy: IfNotPresent
   pullSecret:
 
@@ -32,38 +32,9 @@ workers: 4
 
 # Helm versions supported by this operator instance
 helm:
-  versions: "v2,v3"
+  versions: "v3"
 
-# Tiller settings
-# If a hostname or IP is given here, that will be combined with the
-# tillerPort and used for connecting to Tiller. Otherwise, the
-# cluster-ip of the `tiller-deploy` service in .tillerNamespace is looked up.
-tillerHost:
-tillerPort: 44134
-tillerNamespace: kube-system
-tls:
-  secretName: "helm-client-certs"
-  verify: false
-  enable: false
-  keyFile: "tls.key"
-  certFile: "tls.crt"
-  caContent: ""
-  hostname: ""
 
-# available options when converting from helm 2 to 3
-convert:
-  releaseStorage: "secrets"
-  tillerOutCluster: false
-
-# ADVANCED: Allow for deploying Tiller as a sidecar (restricted to 'localhost' for security reasons).
-# When enabled, either .clusterRole.create should be true or .clusterRole.name should be set to the name of a cluster role granting the required privileges.
-# Please make extra sure you know what you are doing before enabling this. :)
-tillerSidecar:
-  enabled: false
-  image:
-    repository: gcr.io/kubernetes-helm/tiller
-    tag: v2.16.1
-  storage: secret
 
 # For charts stored in Helm repositories other than stable
 # mount repositories.yaml configuration in a volume
@@ -242,4 +213,3 @@ securityContext: {}
 
 containerSecurityContext:
   helmOperator: {}
-  tiller: {}
